@@ -1,9 +1,8 @@
-export const fetchReports = async (page) => {
+export const fetchReports = async (page, filter) => {
   const API_KEY = process.env.REACT_APP_API_TOKEN;
-  const url = `https://api.iex.cloud/v1/stock/market/list/mostactive?listLimit=100&token=${API_KEY}`;
+  const url = `https://api.iex.cloud/v1/stock/market/list/${filter}?listLimit=100&token=${API_KEY}`;
 
   try {
-    console.log("запрос");
     const response = await fetch(url);
     const data = await response.json();
 
@@ -11,10 +10,11 @@ export const fetchReports = async (page) => {
     const limitedData = data.slice(page, page + 10);
 
     // Добавление логотипа к каждому элементу
-    const logoPromises = limitedData.map(async (item) => {
+    const logoPromises = limitedData.map(async (item, index) => {
       const logoUrl = `https://cloud.iexapis.com/stable/stock/${item.symbol}/logo?token=${API_KEY}`;
       const logoResponse = await fetch(logoUrl);
       const logoData = await logoResponse.json();
+      await new Promise((resolve) => setTimeout(resolve, index * 150));
       return { ...item, logo: logoData.url };
     });
 

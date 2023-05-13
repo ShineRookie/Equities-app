@@ -1,5 +1,7 @@
 const initialState = {
   reports: [],
+  activeFilter: "mostactive",
+  filterList: ["mostactive", "gainers", "losers"],
   loading: false,
   error: null,
   page: 0,
@@ -25,11 +27,6 @@ export const reducer = (state = initialState, action) => {
         loading: false,
         error: action.payload,
       };
-    case "SET_PAGE":
-      return {
-        ...state,
-        page: action.payload,
-      };
     case "NEXT_PAGE":
       return {
         ...state,
@@ -44,6 +41,11 @@ export const reducer = (state = initialState, action) => {
       return {
         ...state,
         reports: action.payload,
+      };
+    case "FETCH_FILTER":
+      return {
+        ...state,
+        activeFilter: action.payload,
       };
     default:
       return state;

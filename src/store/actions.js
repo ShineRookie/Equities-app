@@ -24,3 +24,8 @@ export const changePosition = (data) => ({
   type: "CHANGE_POSITION",
   payload: data,
 });
+
+export const fetchFilter = (filter) => ({
+  type: "FETCH_FILTER",
+  payload: filter,
+});

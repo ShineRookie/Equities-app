@@ -10,9 +10,11 @@ import {
 import { fetchReports } from "../api/api";
 import Button from "./Button";
 import EquitiesList from "./EquitiesList";
+import FilterList from "./FilterList";
 
 const Reports = () => {
   const reports = useSelector((state) => state.reports);
+  const filter = useSelector((state) => state.activeFilter);
   const loading = useSelector((state) => state.loading);
   const error = useSelector((state) => state.error);
   const page = useSelector((state) => state.page);
@@ -23,7 +25,7 @@ const Reports = () => {
       dispatch(fetchRequest());
 
       try {
-        const data = await fetchReports(page);
+        const data = await fetchReports(page, filter);
         dispatch(fetchSuccess(data));
       } catch (e) {
         dispatch(fetchFailure(e));
@@ -31,7 +33,7 @@ const Reports = () => {
     };
 
     fetchData();
-  }, [dispatch, page]);
+  }, [dispatch, page, filter]);
 
   const handleNextPage = () => {
     dispatch(nextPage());
@@ -43,9 +45,10 @@ const Reports = () => {
 
   return (
     <div className={"reports__block"}>
-      {reports.length > 0 ? (
+      <FilterList />
+      {reports?.length > 0 ? (
         loading ? (
-          <div className={"loading"}></div>
+          <span className={"loading"}></span>
         ) : error ? (
           <div className={"error"}>Error {error.message}</div>
         ) : (

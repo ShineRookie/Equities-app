@@ -12,9 +12,10 @@ const ListContent = ({ item }) => {
       </div>
       <a
         href={`https://www.tradingview.com/symbols/${item.symbol}`}
+        rel={"noreferrer"}
         target={"_blank"}
         className={"btn price-btn"}
-      >{`$${item.latestPrice}`}</a>
+      >{`$${item.latestPrice.toFixed(2)}`}</a>
     </>
   );
 };
