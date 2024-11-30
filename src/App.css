@@ -179,7 +179,7 @@ h1, h2, h3, h4, h5, h6, p {
   position: absolute;
   left: 50px;
   top: 0;
-
+  min-width: 190px;
   margin: 0;
   padding: 10px;
   list-style: none;
